@@ -579,6 +579,17 @@ footer .developed {
 
 
 
+.project-card img {
+  width: 100%;
+  height: 200px;
+  /* adapte selon la hauteur qui rend bien */
+  object-fit: cover;
+  border-radius: 10px;
+  /* optionnel, pour arrondir les coins */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  /* optionnel, effet joli */
+}
+
 /* ========== SECTION CONTACT ========== */
 
 #contact {
@@ -637,4 +648,43 @@ footer .developed {
 
 .contact-icons a:hover {
   color: #ffae00;
+}
+
+
+
+
+#language-toggle,
+#darkmode-toggle {
+  font-size: 1.3rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#language-toggle:hover,
+#darkmode-toggle:hover {
+  transform: scale(1.2);
+}
+
+body.light {
+  background-color: #efd8d8;
+  color: #111;
+}
+
+body.light .project-card {
+  background-color: #ffffff;
+  color: #000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+body.light .card {
+  background-color: #ffffff;
+  color: #111;
+}
+
+body.light footer,
+body.light header {
+  background-color: #eeeeee;
+  color: #111;
 }
