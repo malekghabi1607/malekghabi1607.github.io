@@ -1,0 +1,24 @@
+[
+  {
+    "id": "lunaPerla",
+    "title": "Luna Perla",
+    "description": "Boutique de bijoux avec une interface fluide.",
+    "image": "assets/images/luna.png",
+    "github": "https://github.com/malekghabi1607/Luna_Perla"
+  },
+  {
+    "id": "easyMonitor",
+    "title": "EasyMonitor",
+    "description": "Monitoring de serveurs temps réel.",
+    "image": "assets/images/easymonitor.png",
+    "github": "https://github.com/malekghabi1607/EasyMonitor"
+  },
+  {
+    "id": "coder24h",
+    "title": "24h pour Coder",
+    "description": "Challenge de dev avec un Snake IA.",
+    "image": "assets/images/24h.png",
+    "github": "https://github.com/malekghabi1607/24h_pour_coder"
+  }
+  
+]
