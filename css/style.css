@@ -1070,5 +1070,5 @@ body.light .card h3,
 body.light .skill-category h3,
 body.light .project-card h4,
 body.light .modal-content h3 {
-  color: #111 !important;
+  color: rgba(1, 23, 105, 0.8) !important;
 }
