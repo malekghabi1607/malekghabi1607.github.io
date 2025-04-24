@@ -1355,22 +1355,4 @@ input, textarea {
 
 
 
-/* Pour un bouton flottant toujours visible en bas à droite */
-.github-float-btn {
-  position: fixed;      /* TOUJOURS par rapport à la fenêtre */
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
-  background: #ffae00;
-  color: #222;
-  padding: 16px 32px;
-  border-radius: 18px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-  cursor: pointer;
-  border: none;
-}
-.github-float-btn:hover {
-  background: #ffd95c;
-}
+
