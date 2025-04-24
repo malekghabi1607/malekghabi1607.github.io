@@ -1063,6 +1063,7 @@ body.light #projects h2,
 body.light #contact h2,
 body.light .card h3,
 body.light .skill-category h3,
+body.light .hi-text,
 body.light .project-card h4,
 body.light .modal-content h3 {
   color:rgba(1, 23, 105, 0.8) !important;
@@ -1327,6 +1328,26 @@ input, textarea {
     margin: 0 auto;
     height: auto;
     padding: 1.2rem;
+    box-sizing: border-box;
+  }
+}
+
+
+@media (max-width: 600px) {
+  #skills {
+    padding: 0.5rem !important;
+    margin: 2vw !important;
+  }
+  .skills-wrapper {
+    padding: 0 !important;
+    gap: 1rem !important;
+  }
+  .skill-category {
+    width: 100% !important;
+    max-width: 99vw !important;
+    margin: 0 auto 1rem auto !important;
+    border-radius: 16px !important;
+    padding: 1rem !important;
     box-sizing: border-box;
   }
 }
