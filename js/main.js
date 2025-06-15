@@ -241,6 +241,11 @@ document.addEventListener('DOMContentLoaded', function() {
   if (aboutMenu) {
     aboutMenu.addEventListener('click', function(e) {
       setTimeout(triggerAboutAnimation, 350); // attend scroll
-    });
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('img').forEach(img => {
+          img.setAttribute('loading', 'lazy');
+        });
+      });
+});
   }
 });
