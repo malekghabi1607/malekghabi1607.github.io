@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "education": "Education",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "lookingFor": "Looking for internship",
+    "jobTitle": "Development / Systems / Data",
+    "contactMe": "Contact me",
+    "viewLinkedIn": "View my LinkedIn profile"
+  },
+  "about": {
+    "title": "About",
+    "hello": "Hello, I am",
+    "description1": "Passionate about the world of computer science since always, I am currently pursuing a dual degree in Computer Science Bachelor at Avignon and Bachelor of Computer Science at Geneva. This enriching experience allows me to explore different pedagogical approaches and develop a global vision of the field.",
+    "description2": "My journey is marked by constant curiosity and a willingness to learn beyond lectures. Each project represents an opportunity for me to push my limits and transform ideas into concrete solutions. I am looking for a 2-month internship that will allow me to put my skills into practice while discovering the realities of the professional world within a dynamic team.",
+    "totalProjects": "COMPLETED PROJECTS",
+    "totalProjectsDesc": "Innovative Web solutions",
+    "certificates": "CERTIFICATES",
+    "certificatesDesc": "Certified skills",
+    "yearsExp": "YEARS OF EXPERIENCE",
+    "yearsExpDesc": "Continuous learning"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "languages": "Languages",
+    "personalSkills": "Personal Skills",
+    "interests": "Interests",
+    "teamwork": "Teamwork",
+    "autonomy": "Autonomy",
+    "creativity": "Creativity",
+    "sport": "Sport",
+    "music": "Music - Guitar",
+    "design": "Design - painting",
+    "travel": "Travel - foreign culture",
+    "podcast": "Podcast - video editing"
+  },
+  "education": {
+    "title": "Education"
+  },
+  "experience": {
+    "title": "Experience"
+  },
+  "projects": {
+    "title": "Projects",
+    "viewDetails": "View details"
+  },
+  "contact": {
+    "title": "Contact me",
+    "description": "Do you have an internship or a project in mind? Feel free to contact me.",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "your@email.com",
+    "message": "Message",
+    "messagePlaceholder": "Your message...",
+    "sendMessage": "Send message",
+    "sending": "Sending...",
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "Error sending message. Please try again."
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}

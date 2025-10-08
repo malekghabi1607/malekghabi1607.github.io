@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes zoom-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes float-shape-1 {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(100px, -100px) rotate(90deg);
+    }
+    50% {
+      transform: translate(200px, 0) rotate(180deg);
+    }
+    75% {
+      transform: translate(100px, 100px) rotate(270deg);
+    }
+  }
+
+  @keyframes float-shape-2 {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+      transform: translate(-150px, 100px) rotate(120deg) scale(1.2);
+    }
+    66% {
+      transform: translate(-100px, -150px) rotate(240deg) scale(0.8);
+    }
+  }
+
+  @keyframes float-shape-3 {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate(-200px, -200px) rotate(180deg);
+    }
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.8s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.8s ease-out forwards;
+  }
+
+  .animate-zoom-in {
+    animation: zoom-in 0.8s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-float-shape-1 {
+    animation: float-shape-1 20s ease-in-out infinite;
+  }
+
+  .animate-float-shape-2 {
+    animation: float-shape-2 25s ease-in-out infinite;
+  }
+
+  .animate-float-shape-3 {
+    animation: float-shape-3 30s ease-in-out infinite;
+  }
+
+  .animate-gradient-shift {
+    background-size: 200% 200%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  .scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+}
+
+
+/* 🌍 Ajustement global : rétrécir automatiquement toutes les cartes d'informations */
+div[class*="backdrop-blur-sm"][class*="rounded-2xl"],
+div[class*="backdrop-blur-sm"][class*="rounded-xl"] {
+  transform: scale(0.95);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0.75rem !important; /* arrondis un peu plus petits */
+  padding: 1.25rem !important; /* réduit le padding */
+}
+
+/* 💻 Sur tablette : encore un peu plus petit */
+@media (max-width: 1024px) {
+  div[class*="backdrop-blur-sm"] {
+    transform: scale(0.93);
+    padding: 1rem !important;
+  }
+}
+
+/* 📱 Sur mobile : compact et lisible */
+@media (max-width: 640px) {
+  div[class*="backdrop-blur-sm"] {
+    transform: scale(0.9);
+    padding: 0.9rem !important;
+  }
+}
