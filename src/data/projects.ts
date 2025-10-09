@@ -749,10 +749,253 @@ export const projects: Project[] = [
     '/images/projects/snake-ia2.jpg'
   ],
   githubUrl: 'https://github.com/malekghabi1607/24h_pour_coder'
+},
+  
+{
+  id: 'first-portfolio',
+  title: 'Portfolio HTML/CSS/JS',
+  titleEn: 'HTML/CSS/JS Portfolio',
+
+  descriptionFr:
+    "Premier portfolio personnel développé en HTML, CSS et JavaScript, présentant mes projets, compétences et parcours dans le développement web. Une maquette a d’abord été conçue sur Figma afin de structurer l’interface avant le développement.",
+  descriptionEn:
+    "First personal portfolio developed using HTML, CSS, and JavaScript, showcasing my projects, skills, and web development journey. A Figma prototype was created first to design and plan the layout before coding.",
+
+  longDescriptionFr: [
+    "Ce projet marque mes débuts dans le développement web. J’y ai conçu un site vitrine complet, clair et responsive, pour présenter mes projets, mes compétences techniques et mes expériences professionnelles.",
+    "Avant le développement, j’ai réalisé une maquette sur Figma afin de visualiser l’agencement des sections et les choix de couleurs, ce qui m’a permis d’avoir une base claire et cohérente pour le design final.",
+    "Le site est entièrement statique et repose sur une architecture simple, organisée en plusieurs sections (accueil, projets, contact, etc.), avec des animations CSS légères et une navigation fluide.",
+    "Le portfolio est hébergé sur GitHub Pages avec un domaine personnalisé et un certificat HTTPS, ce qui m’a permis de découvrir le déploiement web et la gestion de nom de domaine."
+  ],
+  longDescriptionEn: [
+    "This project represents my first step into web development. I designed a complete, clean, and responsive showcase website to present my projects, technical skills, and professional experiences.",
+    "Before development, I created a mockup on Figma to plan the layout and color palette, providing a clear and consistent visual foundation for the final site.",
+    "The site is fully static, structured into several sections (home, projects, contact, etc.), with smooth navigation and light CSS animations.",
+    "The portfolio is hosted on GitHub Pages with a custom domain and HTTPS certificate, allowing me to learn about web deployment and domain management."
+  ],
+
+  featuresFr: [
+    "Design responsive et adaptatif (mobile / tablette / desktop)",
+    "Navigation fluide avec effets de survol et transitions CSS",
+    "Maquette réalisée sur Figma avant le développement",
+    "Présentation claire des projets et des compétences",
+    "Intégration d’un domaine personnalisé GitHub Pages (HTTPS)",
+    "Structure de fichiers bien organisée (HTML / CSS / JS séparés)"
+  ],
+  featuresEn: [
+    "Responsive and adaptive design (mobile / tablet / desktop)",
+    "Smooth navigation with hover effects and CSS transitions",
+    "Figma mockup created before development",
+    "Clear presentation of projects and skills",
+    "Custom domain integration on GitHub Pages (HTTPS)",
+    "Well-structured file organization (HTML / CSS / JS separated)"
+  ],
+
+  challengesFr: [
+    "Conception d’une maquette Figma pour visualiser la structure du site.",
+    "Création d’un design cohérent et harmonieux uniquement avec HTML et CSS.",
+    "Découverte du responsive design et des media queries.",
+    "Apprentissage du déploiement via GitHub Pages et configuration DNS.",
+    "Optimisation des performances (lazy loading, compression d’images)."
+  ],
+  challengesEn: [
+    "Designing a Figma mockup to visualize the site layout before coding.",
+    "Building a clean and consistent design using only HTML and CSS.",
+    "Learning responsive design and media queries.",
+    "Deploying the site on GitHub Pages and configuring DNS.",
+    "Optimizing performance (lazy loading, image compression)."
+  ],
+
+  tech: ['HTML5', 'CSS3', 'JavaScript', 'GitHub Pages', 'Figma'],
+  image: '/images/projects/portfolio-v1.jpg',
+  galleryImages: [
+    '/images/projects/portfolio-v1-1.jpg',
+    '/images/projects/portfolio-v1-2.jpg',
+    '/images/projects/portfolio-v1-3.jpg'
+  ],
+  githubUrl: 'https://github.com/malekghabi1607/Portfolio-',
+},
+
+{
+  id: 'withu',
+  title: 'With U',
+  titleEn: 'With U',
+
+  descriptionFr:
+    "Plateforme web collaborative permettant à plusieurs utilisateurs de regarder des vidéos YouTube ensemble en temps réel, tout en discutant via un chat intégré et en gérant des salons de visionnage.",
+  descriptionEn:
+    "Collaborative web platform allowing multiple users to watch YouTube videos together in real time, chat live, and manage shared viewing rooms.",
+
+  longDescriptionFr: [
+    "With U est une application web innovante développée dans le cadre d’un projet universitaire. Elle offre la possibilité à plusieurs utilisateurs de partager une même expérience de visionnage en temps réel, en synchronisant la lecture de vidéos YouTube et en intégrant un chat interactif.",
+    "Chaque utilisateur peut créer ou rejoindre un salon, choisir une vidéo, puis interagir avec les autres membres grâce à un système de messagerie instantanée. L’objectif est de recréer une expérience collective, fluide et sociale autour du contenu vidéo.",
+    "Le projet a été conçu selon le modèle en cascade, avec un cahier des charges complet, une phase d’analyse UML, et un développement progressif du back-end et du front-end. Les rôles ont été répartis entre quatre membres afin d’assurer une structure claire et une production collaborative.",
+    "With U met l’accent sur la synchronisation temps réel grâce à l’utilisation des WebSockets et d’une architecture moderne basée sur React et Node.js, garantissant une communication stable et des échanges instantanés."
+  ],
+  longDescriptionEn: [
+    "With U is an innovative web application developed as part of a university project. It allows multiple users to share a real-time viewing experience by synchronizing YouTube video playback and integrating an interactive chat system.",
+    "Each user can create or join a room, choose a video, and interact with others via live chat. The goal is to recreate a social and collective experience around video content.",
+    "The project was developed using the waterfall model, including a full requirements document, UML analysis, and separate backend and frontend development phases. Tasks were divided among the team to ensure structure and consistency.",
+    "With U focuses on real-time synchronization using WebSockets and a modern architecture based on React and Node.js, ensuring stable communication and smooth interactions."
+  ],
+
+  featuresFr: [
+    "Visionnage YouTube synchronisé entre plusieurs utilisateurs",
+    "Chat en temps réel intégré dans chaque salon",
+    "Création, gestion et suppression de salons",
+    "Interface web responsive et ergonomique",
+    "Authentification sécurisée avec JWT et bcrypt",
+    "Base de données PostgreSQL pour la persistance des données",
+    "Développement en équipe selon le modèle en cascade"
+  ],
+  featuresEn: [
+    "Real-time synchronized YouTube playback for multiple users",
+    "Integrated live chat within each viewing room",
+    "Room creation, management, and deletion",
+    "Responsive and user-friendly web interface",
+    "Secure authentication using JWT and bcrypt",
+    "PostgreSQL database for data persistence",
+    "Team-based development following the waterfall model"
+  ],
+
+  challengesFr: [
+    "Mise en place d’une synchronisation vidéo stable via WebSockets.",
+    "Gestion du temps réel entre le chat, les vidéos et les utilisateurs connectés.",
+    "Organisation en équipe avec une répartition claire des rôles (front / back).",
+    "Utilisation de l’API YouTube IFrame et gestion des événements asynchrones.",
+    "Respect du modèle en cascade et du cahier des charges initial."
+  ],
+  challengesEn: [
+    "Implementing stable video synchronization using WebSockets.",
+    "Managing real-time interactions between chat, video, and connected users.",
+    "Working in a team with a clear division of roles (frontend / backend).",
+    "Using the YouTube IFrame API and handling asynchronous events.",
+    "Following the waterfall model and adhering to the original requirements document."
+  ],
+
+  tech: [
+    // --- Front-end ---
+    "HTML5",
+    "CSS3",
+    "JavaScript (ES6+)",
+    "React.js",
+    "Vite",
+    "TypeScript (optionnel)",
+    "Tailwind CSS (ou Bootstrap)",
+    "Figma (UI/UX Design)",
+
+    // --- Back-end ---
+    "Node.js",
+    "Express.js",
+    "Socket.io (WebSockets temps réel)",
+    "PostgreSQL",
+    "Prisma (ORM) ou Sequelize",
+    "JWT (authentification)",
+    "bcrypt (hachage des mots de passe)",
+    "REST API / WebSocket API",
+    "Docker (environnement conteneurisé, optionnel)",
+    "GitHub (versionning & CI/CD)",
+
+    // --- Intégrations externes ---
+    "YouTube IFrame API",
+    "reCAPTCHA (sécurité anti-bot)"
+  ],
+
+  image: '/images/projects/withu-cover.jpg',
+  galleryImages: [
+    '/images/projects/withu-1.jpg',
+    '/images/projects/withu-2.jpg',
+    '/images/projects/withu-3.jpg'
+  ],
+  githubUrl: 'https://github.com/malekghabi1607/WithU',
+ 
+},{
+  id: 'portfolio-v2',
+  title: 'Portfolio React/Vite',
+  titleEn: 'React/Vite Portfolio',
+
+  descriptionFr:
+    "Portfolio personnel moderne développé avec React, Vite et Tailwind CSS. Ce site présente mes projets, mes compétences et mon parcours, avec un design responsive, multilingue (FR/EN) et une interface fluide et animée.",
+  descriptionEn:
+    "Modern personal portfolio built with React, Vite, and Tailwind CSS. It showcases my projects, skills, and background, featuring a responsive bilingual interface (FR/EN) with smooth animations and a clean design.",
+
+  longDescriptionFr: [
+    "Ce portfolio constitue la version la plus complète et professionnelle de mes précédents travaux. Il met en avant mes projets académiques et personnels, tout en reflétant mon identité visuelle de développeur.",
+    "Conçu avec React et Vite pour garantir des performances optimales, il inclut un système de gestion de langue (FR/EN), un mode sombre/clair, et une navigation dynamique basée sur les composants React.",
+    "L’interface a été pensée avec Tailwind CSS et inspirée de design systems modernes (shadcn/ui, Lucide Icons, Framer Motion).",
+    "Ce projet m’a également permis d’approfondir la structuration d’un site React, la gestion des hooks personnalisés, le déploiement via GitHub Pages et la création d’un contenu modulaire à partir de fichiers JSON/TypeScript."
+  ],
+  longDescriptionEn: [
+    "This portfolio represents the most complete and professional version of my previous work. It highlights my academic and personal projects while expressing my developer identity through modern UI design.",
+    "Built with React and Vite for top performance, it features bilingual support (FR/EN), dark/light mode, and smooth navigation powered by React components.",
+    "The interface was designed using Tailwind CSS, inspired by modern design systems such as shadcn/ui, Lucide Icons, and Framer Motion.",
+    "This project also helped me deepen my understanding of React architecture, custom hooks, GitHub Pages deployment, and modular content management using JSON and TypeScript."
+  ],
+
+  featuresFr: [
+    "Site entièrement responsive (mobile, tablette, desktop)",
+    "Interface bilingue FR/EN avec sélecteur de langue",
+    "Mode sombre et clair avec persistance des préférences",
+    "Transitions et animations fluides (Framer Motion)",
+    "Composants dynamiques et modulaire (React + TypeScript)",
+    "Déploiement via GitHub Pages avec certificat HTTPS",
+    "Design épuré réalisé avec Tailwind CSS et shadcn/ui"
+  ],
+  featuresEn: [
+    "Fully responsive layout (mobile, tablet, desktop)",
+    "Bilingual interface (FR/EN) with language switcher",
+    "Dark and light modes with preference persistence",
+    "Smooth animations using Framer Motion",
+    "Dynamic modular components (React + TypeScript)",
+    "Deployment on GitHub Pages with HTTPS certificate",
+    "Clean Tailwind CSS design using shadcn/ui and Lucide Icons"
+  ],
+
+  challengesFr: [
+    "Mise en place du mode sombre/clair avec React Context et persistance locale.",
+    "Implémentation d’un système multilingue (FR/EN) basé sur des fichiers JSON.",
+    "Utilisation avancée de Tailwind CSS et de composants shadcn/ui.",
+    "Optimisation du build et du routing avec Vite.",
+    "Organisation d’une architecture modulaire réutilisable pour les futurs projets."
+  ],
+  challengesEn: [
+    "Implementing a dark/light mode using React Context and local persistence.",
+    "Building a multilingual system (FR/EN) using JSON data files.",
+    "Advanced use of Tailwind CSS and shadcn/ui component system.",
+    "Optimizing build performance and routing with Vite.",
+    "Structuring a reusable modular architecture for future projects."
+  ],
+
+  tech: [
+    // --- Front-end ---
+    "React.js",
+    "Vite",
+    "TypeScript",
+    "Tailwind CSS",
+    "shadcn/ui",
+    "Lucide Icons",
+    "Framer Motion",
+    "HTML5",
+    "CSS3",
+    "JavaScript (ES6+)",
+
+    // --- Tools ---
+    "GitHub Pages",
+    "Git",
+    "VS Code",
+    "Figma (maquette UI)",
+    "Node.js (environnement de build)"
+  ],
+
+  image: '/images/projects/portfolio-v2.jpg',
+  galleryImages: [
+    '/images/projects/portfolio-v2-1.jpg',
+    '/images/projects/portfolio-v2-2.jpg',
+    '/images/projects/portfolio-v2-3.jpg'
+  ],
+  githubUrl: 'https://github.com/malekghabi1607/portfolio',
+
 }
-
-
-
 
 
 
