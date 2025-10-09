@@ -347,33 +347,63 @@ export const projects: Project[] = [
   },
 
   {
-    id: 'task-manager',
-    title: 'Task Manager',
-    descriptionFr:
-      'Application web de gestion de tâches avec authentification, CRUD et filtrage.',
-    descriptionEn:
-      'Task management web app with auth, CRUD and filtering.',
-    longDescriptionFr:
-      "API Spring Boot (JWT), persistance PostgreSQL/MySQL, front responsive, tri/filtre, recherche plein-texte, et rôles utilisateur.",
-    longDescriptionEn:
-      'Spring Boot API (JWT), PostgreSQL/MySQL persistence, responsive UI, sort/filter, full-text search, user roles.',
-    featuresFr: [
-      'Auth JWT (inscription/connexion)',
-      'CRUD tâches + tags',
-      'Filtres, tri, recherche',
-      'UI responsive'
-    ],
-    featuresEn: [
-      'JWT auth (signup/login)',
-      'Task CRUD + tags',
-      'Filters, sort, search',
-      'Responsive UI'
-    ],
-    tech: ['Java', 'Spring Boot', 'PostgreSQL', 'MySQL'],
-    image: '/images/projects/task-manager.jpg',
-    galleryImages: ['/images/projects/task-manager1.jpg'],
-    githubUrl: 'https://github.com/malekghabi607/TaskManager'
-  },
+  id: 'task-manager',
+  title: 'Task Manager',
+  titleEn: 'Task Manager',
+
+  descriptionFr:
+    "Application web complète de gestion des tâches permettant la création, la modification, le suivi et la priorisation des tâches, avec authentification et rôles utilisateurs.",
+  descriptionEn:
+    "Full-featured task management web app allowing users to create, edit, track, and prioritize tasks with authentication and user roles.",
+
+  longDescriptionFr: [
+    "Task Manager est une application web qui permet aux utilisateurs de gérer efficacement leurs tâches quotidiennes à travers une interface intuitive et fluide.",
+    "Chaque utilisateur dispose de son espace personnel protégé par un système d'authentification JWT. Il peut y créer, modifier, supprimer et filtrer ses tâches selon différents critères : priorité, statut ou date.",
+    "L’application intègre également une gestion des rôles (utilisateur standard ou administrateur), ainsi qu’un système de tags et de recherche plein texte pour un tri rapide et précis des tâches."
+  ],
+  longDescriptionEn: [
+    "Task Manager is a web application that allows users to efficiently manage their daily tasks through an intuitive and fluid interface.",
+    "Each user has a personal space secured by JWT authentication. They can create, edit, delete, and filter their tasks according to various criteria: priority, status, or due date.",
+    "The application also includes role management (standard user or admin), tag-based organization, and a full-text search system for fast and accurate task filtering."
+  ],
+
+  featuresFr: [
+    "Authentification JWT (inscription et connexion sécurisée)",
+    "CRUD complet sur les tâches et les tags",
+    "Filtres dynamiques, tri et recherche plein texte",
+    "Gestion des rôles (utilisateur / administrateur)",
+    "Interface responsive et ergonomique"
+  ],
+  featuresEn: [
+    "JWT authentication (secure signup and login)",
+    "Full CRUD for tasks and tags",
+    "Dynamic filters, sorting, and full-text search",
+    "Role management (user / admin)",
+    "Responsive and user-friendly interface"
+  ],
+
+  challengesFr: [
+    "Implémentation d’un système d’authentification sécurisé basé sur les tokens JWT.",
+    "Création d’une architecture RESTful claire et maintenable avec Spring Boot.",
+    "Gestion efficace des filtres et recherches côté backend et frontend.",
+    "Optimisation des requêtes SQL pour de meilleures performances sur PostgreSQL/MySQL."
+  ],
+  challengesEn: [
+    "Implementing a secure JWT-based authentication system.",
+    "Building a clean and maintainable RESTful architecture with Spring Boot.",
+    "Efficiently handling filtering and searching on both backend and frontend.",
+    "Optimizing SQL queries for better performance on PostgreSQL/MySQL."
+  ],
+
+  tech: ['Java', 'Spring Boot', 'PostgreSQL', 'MySQL', 'JWT', 'HTML5', 'CSS3', 'JavaScript'],
+  image: '/images/projects/task-manager.jpg',
+  galleryImages: [
+    '/images/projects/task-manager1.jpg',
+    '/images/projects/task-manager2.jpg',
+    '/images/projects/task-manager3.jpg'
+  ],
+  githubUrl: 'https://github.com/malekghabi607/TaskManager'
+},
 
   {
     id: 'hotel-reservation',
