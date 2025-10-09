@@ -420,7 +420,7 @@ export default function HomePage({ isDark, setIsDark }: HomePageProps) {
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
           <a
-            href="/CV_Malek_Ghabi.pdf"
+            href="/documents/CV_Malek_Ghabi.pdf"
             download
             className={`inline-flex items-center justify-center gap-2 px-8 py-4 text-white rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-xl animate-fade-in min-w-[280px] ${isDark ? 'bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 hover:from-orange-500 hover:via-red-500 hover:to-orange-600' : 'bg-gradient-to-r from-slate-900 via-blue-900 to-slate-800 hover:from-slate-800 hover:via-blue-800 hover:to-slate-700'}`}
           >
