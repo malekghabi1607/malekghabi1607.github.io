@@ -6,13 +6,30 @@ import ProjectDetailPage from './pages/ProjectDetailPage';
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
-  const [isDark, setIsDark] = useState(false);
 
+  // Initialisation persistante du thème
+  const [isDark, setIsDark] = useState(() => {
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved) return saved === 'dark';
+    } catch (err) {
+      // éviter no-empty
+      console.debug('theme read failed', err);
+    }
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  // Applique la classe 'dark' et persiste le choix
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    try {
+      document.documentElement.classList.toggle('dark', isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    } catch (err) {
+      // éviter no-empty
+      console.debug('theme write failed', err);
     }
   }, [isDark]);
 

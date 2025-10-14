@@ -26,7 +26,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'CSS3',         logo: '/images/skills/CSS3.svg',        level: 'advanced' },
       { name: 'JavaScript',   logo: '/images/skills/JavaScript.svg',  level: 'advanced' },
       { name: 'TypeScript',   logo: '/images/skills/typescript.svg',  level: 'intermediate' },
-      { name: 'React',        logo: '/images/skills/react.svg',       level: 'intermediate' },
+      { name: 'React',        logo: '/images/skills/react.svg',       level: 'beginner' },
       { name: 'Vue.js',       logo: '/images/skills/vuejs.svg',       level: 'intermediate' },
       // Deux variantes existent chez toi : TailwindCSS.svg et tailwind.svg.
       // Garde celui-ci qui existe : tailwind.svg

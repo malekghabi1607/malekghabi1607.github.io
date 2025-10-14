@@ -1,6 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type DependencyList } from 'react';
 
-export function useScrollAnimation() {
+/**
+ * Observe les éléments .scroll-animate et ajoute .visible
+ * quand ils entrent dans le viewport. Se reconfigure quand
+ * les dépendances changent (langue, thème, etc.).
+ */
+export function useScrollAnimation(deps: DependencyList = []): void {
   const elementsRef = useRef<HTMLElement[]>([]);
 
   useEffect(() => {
@@ -12,25 +17,20 @@ export function useScrollAnimation() {
           }
         });
       },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px',
-      }
+      { threshold: 0.1 }
     );
 
     const elements = document.querySelectorAll('.scroll-animate');
-    elements.forEach((element) => {
-      observer.observe(element);
-    });
+    elements.forEach((el) => observer.observe(el));
 
     elementsRef.current = Array.from(elements) as HTMLElement[];
 
     return () => {
-      elements.forEach((element) => {
-        observer.unobserve(element);
-      });
+      elements.forEach((el) => observer.unobserve(el));
+      observer.disconnect();
     };
-  }, []);
+  }, deps);
 
-  return elementsRef;
+
+  
 }

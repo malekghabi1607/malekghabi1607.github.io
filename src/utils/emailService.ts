@@ -1,39 +1,37 @@
-export interface ContactFormData {
-  name: string;
-  email: string;
-  message: string;
-}
+// src/utils/emailService.ts
+import emailjs from '@emailjs/browser';
 
-export async function sendContactEmail(data: ContactFormData): Promise<{ success: boolean; error?: string }> {
+export type ContactForm = { name: string; email: string; message: string };
+
+const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+export async function sendContactEmail(
+  data: ContactForm
+): Promise<{ success: boolean; error?: string }> {
+  if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+    console.error('EmailJS non configuré:', { SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY });
+    return { success: false, error: 'Configuration EmailJS manquante' };
+  }
+
   try {
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-    if (!supabaseUrl || !supabaseAnonKey) {
-      throw new Error('Configuration Supabase manquante');
-    }
-
-    const response = await fetch(`${supabaseUrl}/functions/v1/send-contact-email`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${supabaseAnonKey}`,
+    // Les noms des variables doivent correspondre à celles définies dans ton template EmailJS
+    await emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      {
+        from_name: data.name,
+        reply_to: data.email,
+        message: data.message,
+        to_name: 'Malek',
       },
-      body: JSON.stringify(data),
-    });
+      { publicKey: PUBLIC_KEY }
+    );
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || 'Erreur lors de l\'envoi du message');
-    }
-
-    const result = await response.json();
     return { success: true };
-  } catch (error) {
-    console.error('Erreur lors de l\'envoi de l\'email:', error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : 'Une erreur est survenue',
-    };
+  } catch (err) {
+    console.error('Erreur EmailJS:', err);
+    return { success: false, error: 'Échec de l’envoi du message' };
   }
 }

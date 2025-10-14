@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, Github, Linkedin, Mail, MapPin, Phone, GraduationCap, Briefcase, ExternalLink, Globe, Sparkles, Sun, Moon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { sendContactEmail } from '../utils/emailService';
@@ -6,8 +6,127 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import BackgroundAnimation from '../components/BackgroundAnimation';
 import { projects as portfolioProjects } from '../data/projects';
 
+/* ===== Types & helpers pour SKILLS (nouveau) ===== */
+type Level = 'beginner' | 'intermediate' | 'advanced' | 'expert';
+type Skill = { name: string; logo: string; level?: Level };
+type SkillCategory = { title: string; skills: Skill[] };
 
+const LEVEL_PERCENT: Record<Level, number> = {
+  beginner: 35,
+  intermediate: 55,
+  advanced: 75,
+  expert: 92,
+};
 
+function percentFromLevel(level?: Level) {
+  return level ? LEVEL_PERCENT[level] : 0;
+}
+
+/** Petit composant interne utilisé SEULEMENT dans la grille des skills.
+ *  Affiche le logo + un anneau circulaire qui s’anime AU SURVOL.
+ */
+function CircleSkill({
+  name,
+  logo,
+  level,
+  isDark,
+}: { name: string; logo: string; level?: Level; isDark: boolean }) {
+  const [hover, setHover] = useState(false);
+
+  // Géométrie du cercle
+  const size = 76;       // taille du SVG (identique au conteneur ~ w-20/h-20 + padding)
+  const stroke = 6;      // épaisseur de l’anneau
+  const r = (size - stroke) / 2;
+  const C = 2 * Math.PI * r;
+
+  const pct = percentFromLevel(level);
+  const dashArray = C;
+  const dashOffset = hover && pct > 0 ? C * (1 - pct / 100) : C;
+
+  const track = isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)';
+  const progress = isDark ? '#fb923c' : '#1e3a8a';
+
+  return (
+    <div
+      className="flex flex-col items-center gap-3 group/skill cursor-pointer"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      title={level ? `${name} • ${pct}%` : name}
+    >
+      <div
+        className={`relative w-20 h-20 flex items-center justify-center rounded-2xl p-3 transition-transform duration-300 overflow-hidden shadow-lg hover:shadow-xl hover:scale-105
+        ${isDark ? 'bg-gradient-to-br from-gray-700 to-gray-800' : 'bg-gradient-to-br from-stone-100 to-blue-50'}`}
+      >
+        {/* Halo doux au survol */}
+        <div
+          className={`absolute inset-0 pointer-events-none opacity-0 group-hover/skill:opacity-100 transition-opacity duration-200 blur-xl
+          ${isDark ? 'bg-gradient-to-br from-orange-500/25 to-red-500/25' : 'bg-gradient-to-br from-blue-500/20 to-slate-600/20'}`}
+        />
+
+       {/* Logo */}
+          <img
+            src={logo}
+            alt={name}
+            className="relative z-10 w-full h-full object-contain transition-transform duration-500
+                      group-hover/skill:brightness-110 group-hover/skill:drop-shadow group-hover/skill:scale-90"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = '/images/skills/_fallback.svg';
+            }}
+            style={{
+              filter: hover
+                ? (isDark
+                    ? 'drop-shadow(0 0 6px rgba(251,146,60,.7))'
+                    : 'drop-shadow(0 0 6px rgba(30,58,138,.55))')
+                : 'none',
+            }}
+          />
+
+        {/* Anneau (SVG) : apparait uniquement au survol */}
+        <svg
+          width={size}
+          height={size}
+          viewBox={`0 0 ${size} ${size}`}
+          className="absolute inset-0 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-150"
+          aria-hidden
+        >
+          {/* Piste */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            stroke={track}
+            strokeWidth={stroke}
+            fill="none"
+            strokeLinecap="round"
+          />
+          {/* Progression */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            stroke={progress}
+            strokeWidth={stroke}
+            fill="none"
+            strokeLinecap="round"
+            transform={`rotate(-90 ${size / 2} ${size / 2})`}
+            strokeDasharray={dashArray}
+            strokeDashoffset={dashOffset}
+            style={{ transition: 'stroke-dashoffset 650ms ease' }}
+          />
+        </svg>
+      </div>
+
+      <span
+        className={`text-sm font-semibold text-center transition-colors ${
+          isDark ? 'text-gray-300 group-hover/skill:text-orange-400' : 'text-gray-700 group-hover/skill:text-blue-900'
+        }`}
+      >
+        {name}
+      </span>
+    </div>
+  );
+}
+/* ===== fin partie SKILLS ===== */
 
 interface HomePageProps {
   isDark: boolean;
@@ -21,10 +140,23 @@ export default function HomePage({ isDark, setIsDark }: HomePageProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
-
   const navigate = useNavigate();
 
-  useScrollAnimation();
+  // ✅ relance l’observer quand langue ou thème changent
+  useScrollAnimation([language, isDark]);
+
+  // ✅ filet de sécurité : rend visibles les éléments si l’observer rate
+  useEffect(() => {
+    const forceVisible = (rootSelector: string) => {
+      const root = document.querySelector(rootSelector);
+      if (!root) return;
+      root.querySelectorAll('.scroll-animate').forEach((el) => {
+        el.classList.add('visible');
+      });
+    };
+    forceVisible('#competences');
+    forceVisible('#formation');
+  }, [language, isDark]);
 
   const translations = {
     fr: {
@@ -126,71 +258,78 @@ export default function HomePage({ isDark, setIsDark }: HomePageProps) {
   };
 
   const displayedProjects = portfolioProjects.map((p) => ({
-  id: p.id,
-  title: language === 'fr' ? p.title : (p.titleEn ?? p.title),
-  description: language === 'fr' ? p.descriptionFr : p.descriptionEn,
-  tech: p.tech,
-  image: p.image,
-}));
+    id: p.id,
+    title: language === 'fr' ? p.title : (p.titleEn ?? p.title),
+    description: language === 'fr' ? p.descriptionFr : p.descriptionEn,
+    tech: p.tech,
+    image: p.image,
+  }));
 
-  const skillCategories = [
+  /* ===== Données SKILLS (avec level) ===== */
+  const skillCategories: SkillCategory[] = [
     {
       title: language === 'fr' ? 'Développement Frontend' : 'Frontend Development',
       skills: [
-        { name: 'HTML', logo: '/images/skills/html5.svg' },
-        { name: 'CSS', logo: '/images/skills/css3.svg' },
-        { name: 'JavaScript', logo: '/images/skills/javascript.svg' },
-        { name: 'TypeScript', logo: '/images/skills/typescript.svg' },
-        { name: 'React', logo: '/images/skills/react.svg' },
-        { name: 'Vue.js', logo: '/images/skills/vuejs.svg' },
-        { name: 'PHP', logo: '/images/skills/php.svg' },
-      ]
+        { name: 'HTML5',       logo: '/images/skills/html5.svg',       level: 'expert' },
+        { name: 'CSS3',        logo: '/images/skills/css3.svg',        level: 'advanced' },
+        { name: 'JavaScript',  logo: '/images/skills/javascript.svg',  level: 'advanced' },
+        { name: 'TypeScript',  logo: '/images/skills/typescript.svg',  level: 'intermediate' },
+        { name: 'React',       logo: '/images/skills/react.svg',       level: 'advanced' },
+        { name: 'Vue.js',      logo: '/images/skills/vuejs.svg',       level: 'intermediate' },
+        { name: 'PHP',         logo: '/images/skills/php.svg',         level: 'advanced' },
+        { name: 'Tailwind CSS',logo: '/images/skills/tailwind.svg',    level: 'intermediate' },
+        { name: 'Yii Framework', logo: '/images/skills/yii.svg',       level: 'beginner' },
+      ],
     },
     {
       title: language === 'fr' ? 'Développement Backend' : 'Backend Development',
       skills: [
-        { name: 'Node.js', logo: '/images/skills/nodejs.svg' },
-        { name: 'Python', logo: '/images/skills/python.svg' },
-        { name: 'Java', logo: '/images/skills/java.svg' },
-        { name: 'Spring', logo: '/images/skills/spring.svg' },
-        { name: 'C', logo: '/images/skills/c.svg' },
-        { name: 'C++', logo: '/images/skills/cplusplus.svg' },
-        { name: 'R', logo: '/images/skills/r.svg' },
-      ]
-    },
-    {
-      title: language === 'fr' ? 'Base de Données' : 'Databases',
-      skills: [
-        { name: 'PostgreSQL', logo: '/images/skills/postgresql.svg' },
-        { name: 'MySQL', logo: '/images/skills/mysql.svg' },
-        { name: 'Firebase', logo: '/images/skills/firebase.svg' },
-      ]
+        { name: 'Node.js', logo: '/images/skills/nodejs.svg',   level: 'intermediate' },
+        { name: 'Python',  logo: '/images/skills/python.svg',   level: 'advanced' },
+        { name: 'Java',    logo: '/images/skills/java.svg',     level: 'advanced' },
+        { name: 'Spring',  logo: '/images/skills/spring.svg',   level: 'intermediate' },
+        { name: 'C',       logo: '/images/skills/c.svg',        level: 'advanced' },
+        { name: 'C++',     logo: '/images/skills/cplusplus.svg',level: 'advanced' },
+        { name: 'R',       logo: '/images/skills/r.svg',        level: 'intermediate' },
+        { name: 'Julia',   logo: '/images/skills/julia.svg',    level: 'intermediate' },
+      ],
     },
     {
       title: 'DevSecOps & Cloud',
       skills: [
-        { name: 'Docker', logo: '/images/skills/docker.svg' },
-        { name: 'GitLab', logo: '/images/skills/gitlab.svg' },
-        { name: 'AWS', logo: '/images/skills/aws.svg' },
-      ]
+        { name: 'Docker', logo: '/images/skills/docker.svg', level: 'intermediate' },
+        { name: 'GitLab', logo: '/images/skills/gitlab.svg', level: 'intermediate' },
+        { name: 'AWS',    logo: '/images/skills/aws.svg',    level: 'intermediate' },
+      ],
+    },
+    {
+      title: language === 'fr' ? 'Base de Données' : 'Databases',
+      skills: [
+        { name: 'PostgreSQL', logo: '/images/skills/postgresql.svg', level: 'advanced' },
+        { name: 'MySQL',      logo: '/images/skills/mysql.svg',      level: 'advanced' },
+        { name: 'Firebase',   logo: '/images/skills/firebase.svg',   level: 'intermediate' },
+      ],
     },
     {
       title: language === 'fr' ? 'Outils' : 'Tools',
       skills: [
-        { name: 'GitHub', logo: '/images/skills/github.svg' },
-        { name: 'Git', logo: '/images/skills/git.svg' },
-        { name: 'Figma', logo: '/images/skills/figma.svg' },
-        { name: 'VSCode', logo: '/images/skills/vscode.svg' },
-      ]
+        { name: 'GitHub',  logo: '/images/skills/github.svg',  level: 'advanced' },
+        { name: 'Git',     logo: '/images/skills/git.svg',     level: 'advanced' },
+        { name: 'Figma',   logo: '/images/skills/figma.svg',   level: 'intermediate' },
+        { name: 'VSCode',  logo: '/images/skills/vscode.svg',  level: 'advanced' },
+        { name: 'Eclipse', logo: '/images/skills/eclipse.svg', level: 'intermediate' },
+      ],
     },
     {
       title: language === 'fr' ? 'Plateformes & IDE' : 'Platforms & IDE',
       skills: [
-        { name: 'Linux', logo: '/images/skills/linux.svg' },
-        { name: 'Windows', logo: '/images/skills/windows.svg' },
-        { name: 'IntelliJ', logo: '/images/skills/intellij.svg' },
-      ]
-    }
+        { name: 'Linux',    logo: '/images/skills/linux.svg',    level: 'advanced' },
+        { name: 'Windows',  logo: '/images/skills/windows.svg',  level: 'advanced' },
+        { name: 'IntelliJ', logo: '/images/skills/intellij.svg', level: 'advanced' },
+        { name: 'WebStorm', logo: '/images/skills/webstorm.svg', level: 'intermediate' },
+        { name: 'PHPStorm', logo: '/images/skills/phpstorm.svg', level: 'intermediate' },
+      ],
+    },
   ];
 
   const education = [
@@ -419,16 +558,16 @@ export default function HomePage({ isDark, setIsDark }: HomePageProps) {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-          <a
-            href="/documents/CV_Malek_Ghabi.pdf"
-            download
-            className={`inline-flex items-center justify-center gap-2 px-8 py-4 text-white rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-xl animate-fade-in min-w-[280px] ${isDark ? 'bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 hover:from-orange-500 hover:via-red-500 hover:to-orange-600' : 'bg-gradient-to-r from-slate-900 via-blue-900 to-slate-800 hover:from-slate-800 hover:via-blue-800 hover:to-slate-700'}`}
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11V3m0 8l-3 3m3-3l3 3m-9 4h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
-            {language === 'fr' ? 'Télécharger mon CV' : 'Download my CV'}
-          </a>
+            <a
+              href="/documents/CV_Malek_Ghabi.pdf"
+              download
+              className={`inline-flex items-center justify-center gap-2 px-8 py-4 text-white rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-xl animate-fade-in min-w-[280px] ${isDark ? 'bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 hover:from-orange-500 hover:via-red-500 hover:to-orange-600' : 'bg-gradient-to-r from-slate-900 via-blue-900 to-slate-800 hover:from-slate-800 hover:via-blue-800 hover:to-slate-700'}`}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11V3m0 8l-3 3m3-3l3 3m-9 4h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              {language === 'fr' ? 'Télécharger mon CV' : 'Download my CV'}
+            </a>
 
             <button
               onClick={() => scrollToSection('contact')}
@@ -630,77 +769,33 @@ export default function HomePage({ isDark, setIsDark }: HomePageProps) {
             {t.technicalSkills}
           </h2>
 
+          {/* ====== Rendu de la grille des catégories de skills (corrigé) ====== */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {skillCategories.map((category, catIndex) => (
               <div
-                  key={category.title}
-                  className={`scroll-animate backdrop-blur-sm rounded-2xl p-8 border transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden group/card ${isDark ? 'bg-gray-800/70 border-gray-700 hover:border-orange-500/50' : 'bg-white/70 border-stone-200 hover:border-blue-900/50'}`}
-                  style={{
-                    transitionDelay: `${catIndex * 0.1}s`,
-                  }}
-
-                onMouseMove={(e) => {
-                  const card = e.currentTarget;
-                  const rect = card.getBoundingClientRect();
-                  const x = e.clientX - rect.left;
-                  const y = e.clientY - rect.top;
-                  const centerX = rect.width / 2;
-                  const centerY = rect.height / 2;
-                  const rotateX = (y - centerY) / 10;
-                  const rotateY = (centerX - x) / 10;
-                  card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-                }}
+                key={category.title}
+                className={`scroll-animate backdrop-blur-sm rounded-2xl p-8 border transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden ${isDark ? 'bg-gray-800/70 border-gray-700 hover:border-orange-500/50' : 'bg-white/70 border-stone-200 hover:border-blue-900/50'}`}
+                style={{ transitionDelay: `${catIndex * 0.1}s` }}
               >
-                <div className={`absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none ${isDark ? 'bg-gradient-to-r from-orange-500/10 via-red-500/10 to-amber-500/10' : 'bg-gradient-to-r from-blue-500/10 via-slate-500/10 to-blue-600/10'}`}
-                  style={{
-                    backgroundSize: '200% 200%',
-                    animation: 'shimmer 2.5s ease-in-out infinite',
-                  }}
-                ></div>
+                <h3 className={`text-2xl font-bold mb-8 text-center ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>
+                  {category.title}
+                </h3>
 
-                <div className="relative z-10">
-                  <h3 className={`text-2xl font-bold mb-8 text-center transition-all duration-300 ${isDark ? 'text-gray-100 group-hover/card:text-orange-400' : 'text-gray-800 group-hover/card:text-blue-900'}`}>
-                    {category.title}
-                  </h3>
-                  <div className="grid grid-cols-3 gap-6">
-                    {category.skills.map((skill) => (
-                      <div
-                        key={skill.name}
-                        className="flex flex-col items-center gap-3 group/skill cursor-pointer"
-                      >
-                        <div
-                          className={`w-20 h-20 flex items-center justify-center rounded-2xl p-3 transition-transform duration-300 relative overflow-hidden ${isDark ? 'bg-gradient-to-br from-gray-700 to-gray-800 hover:from-orange-600 hover:to-red-600' : 'bg-gradient-to-br from-stone-100 to-blue-50 hover:from-blue-500 hover:to-slate-600'} shadow-lg hover:shadow-xl hover:scale-105`}
-                        >
-                          <div className={`absolute inset-0 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300 blur-xl ${isDark ? 'bg-gradient-to-br from-orange-500 to-red-500' : 'bg-gradient-to-br from-blue-500 to-slate-600'}`}></div>
-
-                          <img
-                            src={skill.logo}
-                            alt={skill.name}
-                            className="w-full h-full object-contain relative z-10 transition-all duration-500 group-hover/skill:brightness-125 group-hover/skill:drop-shadow-2xl group-hover/skill:scale-110"
-                            style={{
-                              filter: isDark ? 'drop-shadow(0 0 8px rgba(251, 146, 60, 0))' : 'drop-shadow(0 0 8px rgba(59, 130, 246, 0))',
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.filter = isDark ? 'drop-shadow(0 0 12px rgba(251, 146, 60, 0.8))' : 'drop-shadow(0 0 12px rgba(59, 130, 246, 0.8))';
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.filter = isDark ? 'drop-shadow(0 0 8px rgba(251, 146, 60, 0))' : 'drop-shadow(0 0 8px rgba(59, 130, 246, 0))';
-                            }}
-                          />
-                        </div>
-                        <span className={`text-sm font-semibold text-center transition-all duration-300 ${isDark ? 'text-gray-300 group-hover/skill:text-orange-400 group-hover/skill:scale-110' : 'text-gray-700 group-hover/skill:text-blue-900 group-hover/skill:scale-110'}`}>
-                          {skill.name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="grid grid-cols-3 gap-6">
+                  {category.skills.map((skill) => (
+                    <CircleSkill
+                      key={skill.name}
+                      name={skill.name}
+                      logo={skill.logo}
+                      level={skill.level}
+                      isDark={isDark}
+                    />
+                  ))}
                 </div>
               </div>
             ))}
           </div>
+          {/* ====== fin rendu skills ====== */}
         </div>
       </section>
 
@@ -867,7 +962,7 @@ export default function HomePage({ isDark, setIsDark }: HomePageProps) {
                 </div>
               </a>
               <a
-                href="https://github.com/malekghabi607"
+                href="https://github.com/malekghabi1607"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group"

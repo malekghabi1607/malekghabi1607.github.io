@@ -302,4 +302,4 @@ Compatible avec tous les hébergeurs de sites statiques :
 
 ---
 
-Pour toute question sur l'architecture, consultez ce document ou contactez le mainteneur du projet.
+Pour toute question sur l'architecture, consultez ce document ou contactez moi.

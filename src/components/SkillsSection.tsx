@@ -32,6 +32,7 @@ interface SkillsSectionProps {
   translations: SkillsTranslations;
 }
 
+
 export default function SkillsSection({ isDark, language, translations }: SkillsSectionProps) {
   return (
     <Section id="competences" title={translations.title} isDark={isDark}>
